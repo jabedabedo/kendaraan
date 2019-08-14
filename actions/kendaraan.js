@@ -1,5 +1,6 @@
 const kendaraan = require("../models/kendaraan")
 const { isInteger } = require("lodash")
+const User = require("../models/user")
 
 const create = (req) => {
     let { merk, tipe, price } = req.body
@@ -13,7 +14,8 @@ const create = (req) => {
     var insert_data = {
         merk,
         tipe,
-        price
+        price,
+        author
     }
 
     let data = new kendaraan(insert_data)
@@ -23,7 +25,13 @@ const create = (req) => {
 }
 
 const getAll = async () => {
-    let query = await kendaraan.find({}).exec()
+    let query = await kendaraan.find({})
+    .populate([
+        {
+            path: 'author',
+            model: User
+        }
+    ]).exec()
     console.log(`Result ${query}`)
 
     return query

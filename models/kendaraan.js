@@ -8,6 +8,7 @@ let bookSchema = new Schema({
         type: Number,
         default: 0
     },
+    author: String,
     created_at: {
         type: Date,
         default: Date.now
